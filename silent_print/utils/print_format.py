@@ -37,7 +37,9 @@ def get_pdf_options(silent_print_format):
 	if silent_print_format.get("page_size") == "Custom":
 		options = {
 			"page-width": silent_print_format.get("custom_width"),
-			"page-height": silent_print_format.get("custom_height")
+			"page-height": silent_print_format.get("custom_height"),
+			"margin-left": silent_print_format.get("custom_margin_left"),
+			"margin-right": silent_print_format.get("custom_margin_right")
 		}
 	return options
 
@@ -121,10 +123,11 @@ def prepare_options(html, options):
 	})
 
 	if not options.get("margin-right"):
-		options['margin-right'] = '15mm'
+		options['margin-right'] = '5mm'
+		
 
 	if not options.get("margin-left"):
-		options['margin-left'] = '15mm'
+		options['margin-left'] = '5mm'
 
 	html, html_options = read_options_from_html(html)
 	options.update(html_options or {})
@@ -133,11 +136,16 @@ def prepare_options(html, options):
 	if frappe.session and frappe.session.sid:
 		options['cookie'] = [('sid', '{0}'.format(frappe.session.sid))]
 
+	options.update({
+		'margin-top': '0mm',
+		'margin-bottom': '0mm',
+		'zoom': 2.0,
+	})
+
 	# page size
 	# if not options.get("page-size"):
 	# 	options['page-size'] = frappe.db.get_single_value("Print Settings", "pdf_page_size") or "A4"
 
 	# options['margin-left'] = '50mm'
-
 
 	return html, options
