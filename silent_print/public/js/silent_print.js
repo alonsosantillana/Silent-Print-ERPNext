@@ -125,7 +125,8 @@ frappe.silent_print.WebSocketPrinter = function (options) {
     
     var onError = function () {
         if (frappe.whb == undefined){
-            frappe.msgprint("No se pudo establecer conexión con la impresora. Favor verificar que el <a href='https://github.com/imTigger/webapp-hardware-bridge' target='_blank'>WebApp Hardware Bridge</a> esté ejecutándose.")
+            // frappe.msgprint("No se pudo establecer conexión con la impresora. Favor verificar que el <a href='https://github.com/imTigger/webapp-hardware-bridge' target='_blank'>WebApp Hardware Bridge</a> esté ejecutándose.")
+            console.log("No se pudo establecer conexión con la impresora. Verificar que el WebApp Hardware Bridge este ejecutandose");
             frappe.whb = true
         }
     };
