@@ -49,7 +49,7 @@ import pdfkit
 import six
 import io
 from bs4 import BeautifulSoup
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfReader, PdfWriter
 from frappe.utils import scrub_urls
 from frappe.utils.pdf import get_file_data_from_writer, read_options_from_html, get_wkhtmltopdf_version
 
@@ -73,16 +73,16 @@ def get_pdf(html, options=None, output=None):
 		# Set filename property to false, so no file is actually created
 		filedata = pdfkit.from_string(html, False, options=options or {})
 
-		# https://pythonhosted.org/PyPDF2/PdfFileReader.html
-		# create in-memory binary streams from filedata and create a PdfFileReader object
-		reader = PdfFileReader(io.BytesIO(filedata))
+		# https://pythonhosted.org/PyPDF2/PdfReader.html
+		# create in-memory binary streams from filedata and create a PdfReader object
+		reader = PdfReader(io.BytesIO(filedata))
 	except OSError as e:
 		if any([error in str(e) for error in PDF_CONTENT_ERRORS]):
 			if not filedata:
 				frappe.throw(_("PDF generation failed because of broken image links"))
 
 			# allow pdfs with missing images if file got created
-			if output:  # output is a PdfFileWriter object
+			if output:  # output is a PdfWriter object
 				output.appendPagesFromReader(reader)
 		else:
 			raise
@@ -96,7 +96,7 @@ def get_pdf(html, options=None, output=None):
 		output.appendPagesFromReader(reader)
 		return output
 
-	writer = PdfFileWriter()
+	writer = PdfWriter()
 	writer.appendPagesFromReader(reader)
 
 	if "password" in options:
