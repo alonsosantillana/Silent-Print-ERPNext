@@ -83,7 +83,7 @@ def get_pdf(html, options=None, output=None):
 
 			# allow pdfs with missing images if file got created
 			if output:  # output is a PdfWriter object
-				output.appendPagesFromReader(reader)
+				output.append_pages_from_reader(reader)
 		else:
 			raise
 
@@ -93,11 +93,11 @@ def get_pdf(html, options=None, output=None):
 			password = frappe.safe_encode(password)
 
 	if output:
-		output.appendPagesFromReader(reader)
+		output.append_pages_from_reader(reader)
 		return output
 
 	writer = PdfWriter()
-	writer.appendPagesFromReader(reader)
+	writer.append_pages_from_reader(reader)
 
 	if "password" in options:
 		writer.encrypt(password)
