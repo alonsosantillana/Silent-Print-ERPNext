@@ -1,0 +1,49 @@
+schema: spec-driven
+
+context: |
+  App Frappe/ERPNext v15: silent_print.
+  Proposito: generar documentos PDF y enviarlos sin dialogo de impresion a
+  Webapp Hardware Bridge, tanto desde el navegador local como mediante eventos
+  Frappe Realtime dirigidos a un usuario impresor.
+
+  Componentes actuales:
+  - DocType `Silent Print Format`: relaciona un Print Format con tamano de pagina,
+    margenes y tipo de impresora por defecto.
+  - DocType Single `Silent Print Settings`: configura el usuario impresor y la
+    pestana maestra receptora.
+  - API `silent_print.utils.print_format.create_pdf`: genera el PDF base64.
+  - API `silent_print.utils.print_format.print_silently`: publica la orden remota.
+  - API `silent_print.utils.print_format.set_master_tab`: registra la pestana
+    receptora.
+  - Cliente `silent_print/public/js/silent_print.js`: coordina Frappe Realtime y
+    el WebSocket local de Webapp Hardware Bridge.
+  - Hook `app_include_js` y `page_js` para Desk y Point of Sale.
+
+  Convenciones del proyecto:
+  - Mantener compatibilidad con Frappe v15 y ERPNext v15.
+  - No modificar directamente las apps core `frappe` ni `erpnext`.
+  - Usar APIs estandar, ORM y consultas parametrizadas de Frappe.
+  - No emitir PDFs, datos de documentos, sesiones ni configuracion sensible a
+    usuarios o canales no autorizados.
+  - No registrar contenido PDF base64, cookies, tokens ni identificadores de
+    sesion en logs o consola.
+  - No hardcodear sitios, empresas, usuarios, credenciales ni impresoras fisicas.
+  - Conservar el comportamiento nativo de impresion como fallback cuando la
+    impresion silenciosa no este configurada para un formato.
+  - No ejecutar `bench migrate`, `bench restart`, instalaciones, cambios de datos
+    ni despliegues sin autorizacion explicita.
+
+rules:
+  proposal:
+    - Incluir problema, objetivo, alcance, exclusiones, impacto esperado y criterios de aceptacion.
+    - Identificar app, modulo, DocTypes, hooks, APIs, dependencias y archivos afectados.
+    - Clasificar el riesgo y explicar cualquier cambio de comportamiento.
+  design:
+    - Describir autorizacion, aislamiento de eventos Realtime y validacion de configuracion.
+    - Describir ciclo de vida WebSocket, reintentos, cola y fallback.
+    - Reutilizar el generador PDF nativo de Frappe v15 y evitar copias de codigo core.
+    - Incluir compatibilidad POS, pruebas, migracion, despliegue y plan de reversion.
+  tasks:
+    - Usar tareas verificables y marcables.
+    - Separar seguridad, backend, cliente, POS, pruebas y documentacion.
+    - Registrar desviaciones, pruebas realizadas y validaciones antes de cerrar.

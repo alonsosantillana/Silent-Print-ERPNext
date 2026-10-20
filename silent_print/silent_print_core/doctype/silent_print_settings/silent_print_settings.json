@@ -20,7 +20,8 @@
   {
    "fieldname": "tab_id",
    "fieldtype": "Data",
-   "label": "Master Tab ID"
+   "label": "Master Tab ID",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,

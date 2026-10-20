@@ -1,5 +1,19 @@
 ## Silent Print
 
+### Frappe v15 secure transport
+
+This fork uses the native Frappe PDF API, directed realtime delivery and correlated Hardware Bridge acknowledgements. It supports the response formats used by WebApp Hardware Bridge 0.13.0 and 1.0.1. A successful acknowledgement means **Accepted by HWB** (submitted to the Java/Windows print path); it does not prove that paper physically exited the printer.
+
+Recommended Windows 10/11 baseline:
+
+1. Bind Hardware Bridge to `127.0.0.1`, port `12212`; do not expose it to the LAN.
+2. Map explicit print types such as `INVOICE`, `ACCOUNT`, `ORDER` and `KITCHEN` to installed Windows printers.
+3. Configure an enabled Print User in **Silent Print Settings**. Only that user can select the legacy master tab.
+4. Configure one **Silent Print Format** per Frappe Print Format, including custom dimensions in millimetres and its default print type.
+5. Do not log or persist PDF Base64. Callers should provide an opaque job id so a bridge response can be correlated.
+
+`WebSocketPrinter.submit()` distinguishes an unsent failure, a confirmed bridge rejection and an ambiguous result after `websocket.send()`. Ambiguous work must never be retried automatically. Restaurant Management uses its own durable station page and queue; the global master-tab receiver remains only for compatible legacy callers.
+
 This is a Frappe App for printing documents silently, that is, without having to interact with browser's print dialog and send the printing order directly to the printer.
 
 This is achieved using the tool called [Webapp Hardware Bridge](https://github.com/imTigger/webapp-hardware-bridge) (HWB). This is basically a Java program that acts as a bridge between the webapp and hardware (printers and serial ports), accepting websocket request. 
