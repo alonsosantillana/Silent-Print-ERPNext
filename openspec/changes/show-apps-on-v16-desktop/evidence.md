@@ -13,3 +13,5 @@ App: `silent_print`. Existing target: `Silent Print Settings` at `/desk/silent-p
 - Formatting corrections retain identical Python AST; runtime preimages and deployment manifest are retained outside the repos. Private site identifiers, business snapshots and credentials are excluded from publication.
 
 Final commit/push is recorded separately after delivery. No maintenance-branch merge has occurred. Rollback is limited to these runtime preimages and the new standard Dock owned by this app, preserving user/site layers.
+
+Source delivery: commit `ff5095762114bd600d7209bf315ce4e755593ebb` was pushed to `upstream` / `feature/v16-app-navigation-20261102` and its remote ref was verified. The final documentation commit records this evidence; maintenance branches and production remain unchanged.
