@@ -13,3 +13,5 @@ App `silent_print`: icon `/assets/silent_print/images/app-icon-v1.svg`.
 - No new site backups were made. Rollback uses only the recorded hook preimage/new image, preserving existing assets/navigation.
 
 Commit/push identifiers are added after source delivery. Do not promote to production or merge maintenance branches implicitly.
+
+Source commit `b4ed52f0ac9e832dd43e6c39851c2aa796601c61` was pushed to `upstream` / `feature/v16-app-icons-20261102` and the remote SHA was verified. This documentation follow-up records completed source delivery.
