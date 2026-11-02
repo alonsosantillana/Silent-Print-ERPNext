@@ -196,3 +196,26 @@ separate authorized steps; see
 #### License
 
 MIT
+
+## Navegación en Frappe v16
+
+La pantalla **Apps** muestra **Silent Print** para usuarios internos autorizados y
+abre el DocType existente **Silent Print Settings** (`/desk/silent-print-settings`). El acceso
+respeta los permisos actuales y las restricciones de módulo; no asigna roles.
+El Dock estándar se importa de forma nativa al instalar/migrar esta app en v16.
+No requiere crear Desktop Icons ni Workspace Sidebar, ni reconstruir assets.
+Los iconos de Apps usan las iniciales nativas cuando no hay logo propio.
+
+Alcance, activación puntual en desarrollo y reversión:
+[OpenSpec show-apps-on-v16-desktop](openspec/changes/show-apps-on-v16-desktop/design.md).
+Esta navegación exige el contrato Apps/Dock de v16; no modifica procesos de negocio.
+
+### Icono de Apps
+
+El acceso de **Silent Print** usa un SVG propio servido desde
+`/assets/silent_print/images/app-icon-v1.svg`. Forma parte de una familia de símbolos funcionales con
+azul petróleo, celeste y ámbar inspirados en la identidad TIDAX; no sustituye
+logotipos oficiales de terceros. El archivo es vectorial, local y sin dependencias
+externas. Solo cambia la imagen: conserva destino y permisos.
+
+Diseño y reversión: [customize-v16-app-icons](openspec/changes/customize-v16-app-icons/design.md).

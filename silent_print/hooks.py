@@ -133,3 +133,14 @@ app_include_js = "assets/silent_print/js/silent_print_v15.js"
 # app_include_css = "assets/js/app.min.css"
 
 page_js = {"point-of-sale" : "public/js/silent_print.js"}
+
+# Frappe v16 Apps: use the existing destination and its native permissions.
+add_to_apps_screen = [
+    {
+        "name": "silent_print",
+        "title": "Silent Print",
+        "logo": "/assets/silent_print/images/app-icon-v1.svg",
+        "route": "/desk/silent-print-settings",
+        "has_permission": "silent_print.desktop_navigation.has_app_permission",
+    }
+]
