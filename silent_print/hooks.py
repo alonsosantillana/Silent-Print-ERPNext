@@ -139,6 +139,7 @@ add_to_apps_screen = [
     {
         "name": "silent_print",
         "title": "Silent Print",
+        "logo": "/assets/silent_print/images/app-icon-v1.svg",
         "route": "/desk/silent-print-settings",
         "has_permission": "silent_print.desktop_navigation.has_app_permission",
     }
