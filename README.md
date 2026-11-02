@@ -158,7 +158,32 @@ def print_silently(doctype, name, print_format, print_type):
 	user = frappe.db.get_single_value("Silent Print Settings", "print_user")
 	frappe.publish_realtime("print-silently", data, user)
 ```
-This uses the `frappe.publish_realtime` function to send the print order to the user that has printer connection. This feature send message to every browser's tab in which the app is open. In order to avoid multiple printing (one by every tab), it's important to set a master tab that will finally send the print order. In order to do this, this app adds a icon next to the Frappe/ERPNext logo in the navbar, so when this icon in clicked, it will tell the app that this is the master tab, and the icon will turn into green.
+This uses the `frappe.publish_realtime` function to send the print order to the user that has printer connection. This feature sends messages to that user's browser tabs. Select a master tab so only that tab receives the print jobs.
+
+The authorized Print User sees a printer SVG in the active Desk v16 page header,
+with a sidebar fallback when the header is unavailable. On v15 the existing navbar
+location remains supported. Clicking it selects the master tab through the existing
+server permission check; green means the bridge is connected, not merely that the
+button was clicked. Navigation moves the same control without reinitializing the
+receiver or selecting a new master tab. FontAwesome is not required.
+
+If Restaurant Management returns an assigned station, its console link supersedes
+this legacy control. Deploy the paired v16 indicator fixes together for restaurant
+use and hard-reload cached browser assets. No migration or configuration change is
+required by the UI fix. Merely showing either control never submits a ticket.
+
+Paired offline browser regressions use an existing headless Chromium and the bench's
+existing jQuery (no ERP/provider calls, package installation or real WebSockets):
+
+```bash
+PRINT_TEST_CHROMIUM=/path/to/chrome-headless-shell node --test tests/test_print_indicators.cjs
+```
+
+The neighboring `restaurant_management` checkout supplies the paired script, or set
+`PRINT_TEST_RESTAURANT_ROOT` explicitly. Any browser library override must be scoped
+to that test process. Real-user/HWB acceptance and production deployment are
+separate authorized steps; see
+[`openspec/changes/fix-v16-printer-indicator/`](openspec/changes/fix-v16-printer-indicator/).
 
 ![Master tab Icon for remote silent print](master-tab-icon.png)
 

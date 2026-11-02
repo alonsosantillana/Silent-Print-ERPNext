@@ -277,15 +277,32 @@
         $("#navbar-printer").css("color", colors[state] || colors.idle);
     };
 
+    const mount_icon = (node) => {
+        const legacy_anchor = $(".navbar-brand.navbar-home:visible").first();
+        if (legacy_anchor.length) {
+            legacy_anchor.before(node);
+            return;
+        }
+        const header = $(frappe.container?.page)
+            .find(".page-head:visible .standard-items-section").first();
+        const host = header.length ? header : $(".body-sidebar .standard-items-band:visible").first();
+        if (host.length) host.prepend(node); // Move to one active host, never clone.
+    };
+
     const initialize_remote_receiver = (config) => {
         if (!config.is_print_user || frappe.silent_print.remote_initialized) return;
         frappe.silent_print.remote_initialized = true;
 
-        $(".navbar-brand.navbar-home").before(
-            '<div id="navbar-printer" class="navbar-center ellipsis" '
-            + 'style="color:#64748b;margin-right:8px" title="Silent Print">'
-            + '<i class="fa fa-print"></i></div>'
+        const icon = $(
+            '<button id="navbar-printer" type="button" class="btn-reset icon-btn" '
+            + 'style="color:#64748b;margin-right:8px;display:inline-flex;align-items:center" '
+            + 'title="Silent Print" aria-label="Silent Print">'
+            + frappe.utils.icon("printer", "sm") + '</button>'
         );
+        icon.find("svg").css({
+            "--icon-stroke": "currentColor", "--icon-fill": "none",
+            stroke: "currentColor", fill: "none",
+        });
 
         const printer = new WebSocketPrinter({
             keep_alive: true,
@@ -305,7 +322,14 @@
                 });
             },
         });
-        $("#navbar-printer").on("click", () => frappe.setMasterTab());
+        icon.on("click", () => frappe.setMasterTab());
+        const render_icon = () => {
+            mount_icon(icon);
+            icon.toggle(!$("#restaurant-navbar-printer").length);
+            set_icon_state(printer.getState());
+        };
+        render_icon();
+        $(document).on("page-change", render_icon);
 
         frappe.realtime.on("update_master_tab", (data) => {
             if (data.tab_id === tab_id) {
