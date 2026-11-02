@@ -1,0 +1,18 @@
+{
+ "doctype": "Dock",
+ "name": "silent_print",
+ "app": "silent_print",
+ "standard": 1,
+ "user": "",
+ "mount_on": "",
+ "items": [
+  {
+   "link_type": "URL",
+   "title": "Silent Print",
+   "icon": "printing-printer-soft",
+   "added": 0,
+   "hidden": 0,
+   "url": "/desk/silent-print-settings"
+  }
+ ]
+}

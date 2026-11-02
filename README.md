@@ -171,3 +171,16 @@ This uses the `frappe.publish_realtime` function to send the print order to the 
 #### License
 
 MIT
+
+## Navegación en Frappe v16
+
+La pantalla **Apps** muestra **Silent Print** para usuarios internos autorizados y
+abre el DocType existente **Silent Print Settings** (`/desk/silent-print-settings`). El acceso
+respeta los permisos actuales y las restricciones de módulo; no asigna roles.
+El Dock estándar se importa de forma nativa al instalar/migrar esta app en v16.
+No requiere crear Desktop Icons ni Workspace Sidebar, ni reconstruir assets.
+Los iconos de Apps usan las iniciales nativas cuando no hay logo propio.
+
+Alcance, activación puntual en desarrollo y reversión:
+[OpenSpec show-apps-on-v16-desktop](openspec/changes/show-apps-on-v16-desktop/design.md).
+Esta navegación exige el contrato Apps/Dock de v16; no modifica procesos de negocio.
